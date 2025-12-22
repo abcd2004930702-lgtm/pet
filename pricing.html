@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="毛孩日常商品介紹" />
+        <meta name="author" content="B111104014" />
+        <title>毛孩日常 - 商品介紹</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/icon.png" />
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Core theme CSS (Bootstrap 5)-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+        <style>
+            .product-card {
+                transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+                border: none;
+                border-radius: 15px;
+                overflow: hidden;
+            }
+            .product-card:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+            }
+            .card-img-top {
+                height: 200px;
+                object-fit: cover;
+                background-color: #f8f9fa;
+            }
+            .carousel-indicators [data-bs-target] {
+                background-color: #212529;
+            }
+            .carousel-control-prev-icon,
+            .carousel-control-next-icon {
+                filter: invert(1);
+            }
+            .price-tag {
+                font-size: 1.25rem;
+                font-weight: bold;
+                color: #dc3545;
+            }
+            /* Modal 樣式優化 */
+            .modal-content {
+                border-radius: 20px;
+                border: none;
+            }
+            .modal-header {
+                border-bottom: none;
+            }
+        </style>
+    </head>
+    <body class="d-flex flex-column min-vh-100">
+        <main class="flex-shrink-0">
+            <!-- Navigation-->
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <div class="container px-5">
+                    <a class="navbar-brand" href="index.html">毛孩日常</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                            <li class="nav-item"><a class="nav-link" href="index.html">熱門商品介紹</a></li>
+                            <li class="nav-item"><a class="nav-link" href="about.html">關於公司</a></li>
+                            <li class="nav-item"><a class="nav-link" href="contact.html">聯繫方式</a></li>
+                            <li class="nav-item"><a class="nav-link active" href="pricing.html">商品介紹</a></li>
+                            <li class="nav-item"><a class="nav-link" href="faq.html">FAQ</a></li>
+                            <li class="nav-item"><a class="nav-link" href="game.html">小遊戲</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
+            <!-- Pricing section-->
+            <section class="bg-light py-5">
+                <div class="container px-5 my-5">
+                    <div class="text-center mb-5">
+                        <h1 class="fw-bolder">商品介紹</h1>
+                        <p class="lead fw-normal text-muted mb-0">為您的毛孩挑選最優質的日常用品</p>
+                    </div>
+
+                    <!-- Carousel Wrapper -->
+                    <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
+                        <!-- Indicators -->
+                        <div class="carousel-indicators" style="bottom: -50px;">
+                            <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                            <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                        </div>
+
+                        <div class="carousel-inner">
+                            <!-- 第一組商品 (1-3) -->
+                            <div class="carousel-item active">
+                                <div class="row gx-5 justify-content-center">
+                                    <!-- 商品 1 -->
+                                    <div class="col-lg-4 mb-5">
+                                        <div class="card h-100 shadow-sm product-card">
+                                            <img src="assets/06.jpg" class="card-img-top" alt="商品1">
+                                            <div class="card-body p-4 text-center">
+                                                <h5 class="fw-bolder">極致舒適寵物床</h5>
+                                                <div class="price-tag mb-3">$1,200</div>
+                                                <p class="text-muted small">記憶棉材質，給毛孩最好的睡眠品質。</p>
+                                                <div class="d-grid"><button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#productModal1">查看詳情</button></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- 商品 2 -->
+                                    <div class="col-lg-4 mb-5">
+                                        <div class="card h-100 shadow-sm product-card">
+                                            <img src="assets/07.jpg" class="card-img-top" alt="商品2">
+                                            <div class="card-body p-4 text-center">
+                                                <h5 class="fw-bolder">自動循環飲水機</h5>
+                                                <div class="price-tag mb-3">$850</div>
+                                                <p class="text-muted small">三層過濾系統，隨時提供純淨水源。</p>
+                                                <div class="d-grid"><button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#productModal2">查看詳情</button></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- 商品 3 -->
+                                    <div class="col-lg-4 mb-5">
+                                        <div class="card h-100 shadow-sm product-card">
+                                            <img src="assets/08.jpg" class="card-img-top" alt="商品3">
+                                            <div class="card-body p-4 text-center">
+                                                <h5 class="fw-bolder">天然有機寵物餐餅</h5>
+                                                <div class="price-tag mb-3">$450</div>
+                                                <p class="text-muted small">嚴選有機穀物，健康美味無負擔。</p>
+                                                <div class="d-grid"><button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#productModal3">查看詳情</button></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 第二組商品 (4-6) -->
+                            <div class="carousel-item">
+                                <div class="row gx-5 justify-content-center">
+                                    <!-- 商品 4 -->
+                                    <div class="col-lg-4 mb-5">
+                                        <div class="card h-100 shadow-sm product-card">
+                                            <img src="assets/09.jpg" class="card-img-top" alt="商品4">
+                                            <div class="card-body p-4 text-center">
+                                                <h5 class="fw-bolder">智能寵物餵食機</h5>
+                                                <div class="price-tag mb-3">$2,600</div>
+                                                <p class="text-muted small">APP遠端操控，定時定量不漏餐。</p>
+                                                <div class="d-grid"><button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#productModal4">查看詳情</button></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- 商品 5 -->
+                                    <div class="col-lg-4 mb-5">
+                                        <div class="card h-100 shadow-sm product-card">
+                                            <img src="assets/10.jpg" class="card-img-top" alt="商品5">
+                                            <div class="card-body p-4 text-center">
+                                                <h5 class="fw-bolder">伸縮自動牽繩</h5>
+                                                <div class="price-tag mb-3">$590</div>
+                                                <p class="text-muted small">5公尺自由長度，人體工學握把。</p>
+                                                <div class="d-grid"><button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#productModal5">查看詳情</button></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- 商品 6 -->
+                                    <div class="col-lg-4 mb-5">
+                                        <div class="card h-100 shadow-sm product-card">
+                                            <img src="assets/11.jpg" class="card-img-top" alt="商品6">
+                                            <div class="card-body p-4 text-center">
+                                                <h5 class="fw-bolder">抗憂鬱磨牙棒</h5>
+                                                <div class="price-tag mb-3">$320</div>
+                                                <p class="text-muted small">天然食材，緩解毛孩在家壓力。</p>
+                                                <div class="d-grid"><button class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#productModal6">查看詳情</button></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Controls -->
+                        <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer-->
+        <footer class="bg-dark py-4 mt-auto">
+            <div class="container px-5">
+                <div class="row align-items-center justify-content-between flex-column flex-sm-row">
+                    <div class="col-auto"><div class="small m-0 text-white">Copyright &copy; 毛孩日常 B111104014-2025</div></div>
+                    <div class="col-auto">
+                        <a class="link-light small" href="#!">隱私權</a>
+                        <span class="text-white mx-1">&middot;</span>
+                        <a class="link-light small" href="#!">條款</a>
+                        <span class="text-white mx-1">&middot;</span>
+                        <a class="link-light small" href="#!">聯繫</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- 商品彈出視窗 (Modals) -->
+        
+        <!-- Modal 1 -->
+        <div class="modal fade" id="productModal1" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body p-5">
+                        <div class="row">
+                            <div class="col-md-6 text-center">
+                                <img src="assets/12.jpg" class="img-fluid rounded mb-4" alt="商品1">
+                            </div>
+                            <div class="col-md-6">
+                                <h2 class="fw-bolder">極致舒適寵物床</h2>
+                                <h4 class="price-tag mb-4">$1,200</h4>
+                                <p class="mb-4">這款寵物床採用醫療級記憶棉，能完美支撐毛孩的骨骼與肌肉。透氣涼感布料讓夏季不悶熱，可拆洗布套設計讓清潔更便利。適合各類犬貓使用，給予他們宛如五星級飯店的睡眠體驗。</p>
+                                <ul class="list-unstyled mb-4">
+                                    <li><i class="bi bi-check-circle-fill text-primary"></i> 高密度記憶棉支撐</li>
+                                    <li><i class="bi bi-check-circle-fill text-primary"></i> 底部防滑設計</li>
+                                    <li><i class="bi bi-check-circle-fill text-primary"></i> 100% 可機洗布套</li>
+                                </ul>
+                                <button type="button" class="btn btn-dark btn-lg w-100" data-bs-dismiss="modal">關閉詳細內容</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal 2 -->
+        <div class="modal fade" id="productModal2" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body p-5">
+                        <div class="row">
+                            <div class="col-md-6 text-center">
+                                <img src="assets/13.jpg" class="img-fluid rounded mb-4" alt="商品2">
+                            </div>
+                            <div class="col-md-6">
+                                <h2 class="fw-bolder">自動循環飲水機</h2>
+                                <h4 class="price-tag mb-4">$850</h4>
+                                <p class="mb-4">貓咪天生喜歡流動的水。這款飲水機具備三層過濾網，有效過濾雜質、除臭、軟化水質，保護毛孩泌尿系統。超靜音水泵設計，即使放在臥室也不干擾睡眠。</p>
+                                <ul class="list-unstyled mb-4">
+                                    <li><i class="bi bi-check-circle-fill text-primary"></i> 2公升超大容量</li>
+                                    <li><i class="bi bi-check-circle-fill text-primary"></i> 超靜音運行低於30分貝</li>
+                                    <li><i class="bi bi-check-circle-fill text-primary"></i> 缺水自動斷電保護</li>
+                                </ul>
+                                <button type="button" class="btn btn-dark btn-lg w-100" data-bs-dismiss="modal">關閉詳細內容</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal 3 -->
+        <div class="modal fade" id="productModal3" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body p-5">
+                        <div class="row">
+                            <div class="col-md-6 text-center">
+                                <img src="assets/14.jpg" class="img-fluid rounded mb-4" alt="商品3">
+                            </div>
+                            <div class="col-md-6">
+                                <h2 class="fw-bolder">天然有機寵物餐餅</h2>
+                                <h4 class="price-tag mb-4">$450</h4>
+                                <p class="mb-4">堅持使用100%人食等級食材製作，無添加人工香料、色素及防腐劑。富含多種維生素與膳食纖維，是一款健康又美味的獎勵零食，讓毛孩在訓練中充滿動力。</p>
+                                <ul class="list-unstyled mb-4">
+                                    <li><i class="bi bi-check-circle-fill text-primary"></i> 純手工低溫烘焙</li>
+                                    <li><i class="bi bi-check-circle-fill text-primary"></i> 單一肉源不含致敏穀類</li>
+                                    <li><i class="bi bi-check-circle-fill text-primary"></i> 產地直送新鮮食材</li>
+                                </ul>
+                                <button type="button" class="btn btn-dark btn-lg w-100" data-bs-dismiss="modal">關閉詳細內容</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal 4 -->
+        <div class="modal fade" id="productModal4" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body p-5">
+                        <div class="row">
+                            <div class="col-md-6 text-center">
+                                <img src="assets/15.jpg" class="img-fluid rounded mb-4" alt="商品4">
+                            </div>
+                            <div class="col-md-6">
+                                <h2 class="fw-bolder">智能寵物餵食機</h2>
+                                <h4 class="price-tag mb-4">$2,600</h4>
+                                <p class="mb-4">即使出遠門也不擔心毛孩餓肚子。透過專屬APP可隨時安排餵食計畫，內建視訊鏡頭還能遠端觀察毛孩進食狀況。具有防卡糧機構設計，確保餐餐準時送達。</p>
+                                <ul class="list-unstyled mb-4">
+                                    <li><i class="bi bi-check-circle-fill text-primary"></i> 雙電源備份，斷電不漏餐</li>
+                                    <li><i class="bi bi-check-circle-fill text-primary"></i> 即時語音錄音廣播</li>
+                                    <li><i class="bi bi-check-circle-fill text-primary"></i> 手機一鍵加餐功能</li>
+                                </ul>
+                                <button type="button" class="btn btn-dark btn-lg w-100" data-bs-dismiss="modal">關閉詳細內容</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal 5 -->
+        <div class="modal fade" id="productModal5" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body p-5">
+                        <div class="row">
+                            <div class="col-md-6 text-center">
+                                <img src="assets/16.jpg" class="img-fluid rounded mb-4" alt="商品5">
+                            </div>
+                            <div class="col-md-6">
+                                <h2 class="fw-bolder">伸縮自動牽繩</h2>
+                                <h4 class="price-tag mb-4">$590</h4>
+                                <p class="mb-4">享受散步時的自由感！一鍵鎖定功能讓你隨時掌控毛孩距離。高強度尼龍織帶耐拉扯，人體工學矽膠把手長時間握持也不累。附帶LED照明燈，夜間散步更安全。</p>
+                                <ul class="list-unstyled mb-4">
+                                    <li><i class="bi bi-check-circle-fill text-primary"></i> 一鍵煞車與鎖定機制</li>
+                                    <li><i class="bi bi-check-circle-fill text-primary"></i> 防纏繞360度旋轉頭</li>
+                                    <li><i class="bi bi-check-circle-fill text-primary"></i> 內建垃圾袋收納空間</li>
+                                </ul>
+                                <button type="button" class="btn btn-dark btn-lg w-100" data-bs-dismiss="modal">關閉詳細內容</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal 6 -->
+        <div class="modal fade" id="productModal6" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body p-5">
+                        <div class="row">
+                            <div class="col-md-6 text-center">
+                                <img src="assets/17.jpg" class="img-fluid rounded mb-4" alt="商品6">
+                            </div>
+                            <div class="col-md-6">
+                                <h2 class="fw-bolder">抗憂鬱磨牙棒</h2>
+                                <h4 class="price-tag mb-4">$320</h4>
+                                <p class="mb-4">專為愛啃咬的毛孩設計，由天然植物纖維與鹿角粉混合製成。獨特的顆粒紋路能有效清除牙垢，預防口臭。這款磨牙棒耐嚼且安全，是舒緩焦慮情緒的絕佳選擇。</p>
+                                <ul class="list-unstyled mb-4">
+                                    <li><i class="bi bi-check-circle-fill text-primary"></i> 維護口腔牙齒健康</li>
+                                    <li><i class="bi bi-check-circle-fill text-primary"></i> 無毒耐咬材質</li>
+                                    <li><i class="bi bi-check-circle-fill text-primary"></i> 散發淡淡天然肉香</li>
+                                </ul>
+                                <button type="button" class="btn btn-dark btn-lg w-100" data-bs-dismiss="modal">關閉詳細內容</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+</html>
