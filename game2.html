@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>毛孩日常</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/icon.png" />
+        <!-- Bootstrap icons-->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="css/styles.css" rel="stylesheet" />
+    </head>
+    <body class="d-flex flex-column">
+        <main class="flex-shrink-0">
+            <!-- Navigation-->
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+                <div class="container px-5">
+                    <a class="navbar-brand" href="index.html">毛孩日常</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                            <li class="nav-item"><a class="nav-link" href="index.html">熱門商品介紹</a></li>
+                            <li class="nav-item"><a class="nav-link" href="about.html">關於公司</a></li>
+                            <li class="nav-item"><a class="nav-link" href="contact.html">聯繫方式</a></li>
+                            <li class="nav-item"><a class="nav-link" href="pricing.html">商品介紹</a></li>
+                            <li class="nav-item"><a class="nav-link" href="faq.html">FAQ</a></li>
+                            <li class="nav-item"><a class="nav-link" href="game.html">小遊戲</a></li>
+							<li class="nav-item"><a class="nav-link" href="game2.html">小遊戲2</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <!-- Page content-->
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>靈魂碎片：遺落的記憶 - 像素 RPG</title>
+    <style>
+        :root {
+            --bg-color: #1a1a1a;
+            --accent-color: #4a90e2;
+        }
+        * {
+            box-sizing: border-box;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center; /* 垂直置中 */
+            min-height: 100vh;
+            overflow: hidden; /* 防止電腦版出現捲軸 */
+        }
+        #game-container {
+            position: relative;
+            box-shadow: 0 0 50px rgba(0,0,0,0.8);
+            border: 4px solid #333;
+            image-rendering: pixelated;
+            max-width: 95vw;
+            max-height: 90vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #000;
+        }
+        canvas {
+            display: block;
+            background-color: #000;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        #ui-overlay {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            pointer-events: none;
+            z-index: 10;
+        }
+        #ui-bottom-right {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            pointer-events: auto;
+            z-index: 10;
+        }
+        #hearts {
+            display: flex;
+            flex-direction: column;
+        }
+        .level-indicator {
+            font-size: 12px;
+            color: #aaa;
+            margin-top: 2px;
+            background: rgba(0,0,0,0.5);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        .heart {
+            color: #ff4757;
+            font-size: 24px;
+            text-shadow: 2px 2px #000;
+            margin-right: 2px;
+        }
+        .ui-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            padding: 6px 12px;
+            font-size: 12px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background 0.2s;
+            pointer-events: auto;
+        }
+
+        /* 手機控制面板邏輯 */
+        #mobile-controls {
+            display: none; /* 電腦版預設隱藏 */
+            grid-template-areas: 
+                ". up ."
+                "left down right";
+            gap: 10px;
+            margin-top: 20px;
+            user-select: none;
+            position: relative;
+            z-index: 100;
+        }
+
+        /* 僅在觸控裝置或小螢幕顯示 */
+        @media (pointer: coarse) or (max-width: 768px) {
+            body {
+                justify-content: flex-start; /* 手機版改回靠上，預留按鈕空間 */
+                padding-top: 20px;
+                overflow-y: auto;
+            }
+            #mobile-controls {
+                display: grid;
+            }
+        }
+
+        .control-btn {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            cursor: pointer;
+        }
+        .control-btn:active {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        #btn-up { grid-area: up; }
+        #btn-down { grid-area: down; }
+        #btn-left { grid-area: left; }
+        #btn-right { grid-area: right; }
+
+        #level-select-menu {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 400px;
+            max-height: 80vh;
+            background: rgba(0, 0, 0, 0.95);
+            border: 2px solid #4a90e2;
+            padding: 20px;
+            display: none;
+            flex-direction: column;
+            z-index: 200;
+            border-radius: 10px;
+        }
+        .password-section {
+            margin-top: 10px;
+            display: flex;
+            gap: 5px;
+        }
+        .password-section input {
+            flex: 1;
+            background: #222;
+            border: 1px solid #444;
+            color: white;
+            padding: 5px;
+            border-radius: 4px;
+        }
+        .level-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            overflow-y: auto;
+            margin-top: 15px;
+            padding-bottom: 10px;
+        }
+        .level-grid button {
+            background: #333;
+            color: white;
+            border: 1px solid #555;
+            padding: 10px 5px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .level-grid button.locked {
+            opacity: 0.3;
+            cursor: not-allowed;
+            background: #111;
+        }
+        .level-grid button.unlocked {
+            background: #4a90e2;
+            border-color: #fff;
+        }
+        #dialog-box {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            background: rgba(0, 0, 0, 0.85);
+            border: 2px solid #fff;
+            padding: 10px;
+            display: none;
+            font-size: 16px;
+            z-index: 50;
+        }
+        #menu-screen, #death-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            text-align: center;
+            padding: 20px;
+        }
+        .btn {
+            background: #4a90e2;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 18px;
+            cursor: pointer;
+            margin-top: 15px;
+            border-radius: 5px;
+        }
+        .instructions {
+            margin-top: 15px;
+            font-size: 12px;
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+
+<div id="game-container">
+    <canvas id="gameCanvas"></canvas>
+    
+    <div id="ui-overlay">
+        <div id="hearts-container">
+            <div id="hearts"></div>
+            <div id="level-num" class="level-indicator">關卡: 1 / 50</div>
+        </div>
+        <button class="ui-btn" onclick="resetGame()">重新開始</button>
+    </div>
+
+    <div id="ui-bottom-right">
+        <button class="ui-btn" onclick="toggleLevelSelect()">選擇關卡</button>
+    </div>
+
+    <div id="level-select-menu">
+        <div style="display:flex; justify-content: space-between; align-items: center;">
+            <h3 style="margin:0">選擇關卡</h3>
+            <button onclick="toggleLevelSelect()" style="background:none; border:none; color:white; cursor:pointer; font-size:24px;">✕</button>
+        </div>
+        
+        <div class="password-section">
+            <input type="password" id="unlock-pass" placeholder="輸入解鎖密碼...">
+            <button class="ui-btn" onclick="checkUnlockPassword()">解鎖</button>
+        </div>
+
+        <div class="level-grid" id="level-grid-container"></div>
+    </div>
+
+    <div id="dialog-box" onclick="hideDialog()">
+        <div id="dialog-name" style="color: #4a90e2; font-weight: bold; margin-bottom: 3px;"></div>
+        <div id="dialog-text"></div>
+        <div style="font-size:10px; color:#aaa; margin-top:5px;">(點擊關閉)</div>
+    </div>
+
+    <div id="menu-screen">
+        <h2>靈魂碎片：遺落的記憶</h2>
+        <p>找回失落的力量，解開古老的謎團</p>
+        <button class="btn" onclick="startGame()">開始旅程</button>
+        <div class="instructions">
+            使用方向鍵或 WASD 移動<br>
+            推動橘色箱子到藍色框框處
+        </div>
+    </div>
+
+    <div id="death-screen" style="display: none;">
+        <h2 style="color: #ff4757;">靈魂歸於虛無...</h2>
+        <button class="btn" onclick="resetGame()">重新嘗試</button>
+    </div>
+</div>
+
+<!-- 手機版專用控制區域 -->
+<div id="mobile-controls">
+    <div class="control-btn" id="btn-up">▲</div>
+    <div class="control-btn" id="btn-left">◀</div>
+    <div class="control-btn" id="btn-down">▼</div>
+    <div class="control-btn" id="btn-right">▶</div>
+</div>
+
+<script>
+/**
+ * 遊戲常數與設定
+ */
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
+const TILE_SIZE = 40;
+const COLS = 16;
+const ROWS = 12;
+
+canvas.width = COLS * TILE_SIZE;
+canvas.height = ROWS * TILE_SIZE;
+
+let gameState = {
+    running: false,
+    currentLevel: 0,
+    maxUnlockedLevel: 0,
+    isMasterUnlocked: false,
+    lives: 3,
+    dialogActive: false,
+    levelSelectOpen: false,
+    levelSolved: false
+};
+
+/**
+ * 關卡生成邏輯
+ */
+const levels = [];
+function generateLevels() {
+    for (let i = 0; i < 50; i++) {
+        let map = Array(ROWS).fill().map(() => Array(COLS).fill(0));
+        for (let r = 0; r < ROWS; r++) {
+            for (let c = 0; c < COLS; c++) {
+                if (r === 0 || r === ROWS - 1 || c === 0 || c === COLS - 1) map[r][c] = 1;
+            }
+        }
+        let wallCount = 8 + Math.floor(i / 2.5);
+        for (let j = 0; j < wallCount; j++) {
+            let r = Math.floor(Math.random() * (ROWS - 2)) + 1;
+            let c = Math.floor(Math.random() * (COLS - 2)) + 1;
+            if ((r === 1 && c === 1) || (r === ROWS-2 && c === COLS-2)) continue;
+            map[r][c] = 1;
+        }
+        let trapCount = 1 + Math.floor(i / 6);
+        for (let j = 0; j < trapCount; j++) {
+            let r = Math.floor(Math.random() * (ROWS - 2)) + 1;
+            let c = Math.floor(Math.random() * (COLS - 2)) + 1;
+            if (map[r][c] === 0 && !(r === 1 && c === 1)) map[r][c] = 3;
+        }
+        let boxCount = 1 + Math.floor(i / 12);
+        for (let j = 0; j < boxCount; j++) {
+            let gr = Math.floor(Math.random() * (ROWS - 4)) + 2;
+            let gc = Math.floor(Math.random() * (COLS - 4)) + 2;
+            if (map[gr][gc] === 0) map[gr][gc] = 6; else j--;
+        }
+        for (let j = 0; j < boxCount; j++) {
+            let br = Math.floor(Math.random() * (ROWS - 4)) + 2;
+            let bc = Math.floor(Math.random() * (COLS - 4)) + 2;
+            if (map[br][bc] === 0) map[br][bc] = 2; else j--;
+        }
+        map[1][1] = 0;
+        levels.push({ map: map, playerStart: {x: 1, y: 1} });
+    }
+}
+generateLevels();
+
+let player = { x: 0, y: 0, dir: 'down', invulnerable: 0 };
+let currentMap = [];
+
+function startGame() {
+    document.getElementById('menu-screen').style.display = 'none';
+    document.getElementById('death-screen').style.display = 'none';
+    gameState.running = true;
+    gameState.lives = 3;
+    loadLevel(0);
+    updateHearts();
+    requestAnimationFrame(gameLoop);
+}
+
+function loadLevel(idx) {
+    if (idx >= levels.length) {
+        showDialog("系統", "恭喜！你完成了所有 50 個關卡！");
+        gameState.running = false;
+        return;
+    }
+    
+    if (!gameState.isMasterUnlocked && idx > gameState.maxUnlockedLevel) {
+        showDialog("系統", "這扇門目前被封印著，你需要通過前面的試煉。");
+        return;
+    }
+
+    gameState.currentLevel = idx;
+    gameState.levelSolved = false;
+    currentMap = JSON.parse(JSON.stringify(levels[idx].map));
+    player.x = levels[idx].playerStart.x;
+    player.y = levels[idx].playerStart.y;
+    player.invulnerable = 0;
+    document.getElementById('level-num').innerText = `關卡: ${idx + 1} / 50`;
+}
+
+function resetGame() {
+    gameState.running = true;
+    loadLevel(gameState.currentLevel);
+    updateHearts();
+    document.getElementById('death-screen').style.display = 'none';
+}
+
+function toggleLevelSelect() {
+    gameState.levelSelectOpen = !gameState.levelSelectOpen;
+    const menu = document.getElementById('level-select-menu');
+    menu.style.display = gameState.levelSelectOpen ? 'flex' : 'none';
+    if (gameState.levelSelectOpen) {
+        refreshLevelGrid();
+    }
+}
+
+function refreshLevelGrid() {
+    const container = document.getElementById('level-grid-container');
+    container.innerHTML = '';
+    for (let i = 0; i < 50; i++) {
+        const btn = document.createElement('button');
+        const isUnlocked = gameState.isMasterUnlocked || i <= gameState.maxUnlockedLevel;
+        btn.innerText = i + 1;
+        
+        if (isUnlocked) {
+            btn.className = (i === gameState.currentLevel) ? 'unlocked' : '';
+            btn.onclick = () => { loadLevel(i); toggleLevelSelect(); };
+        } else {
+            btn.className = 'locked';
+            btn.innerText = '🔒';
+            btn.onclick = () => { showDialog("鎖定", "完成前一關即可解鎖！"); };
+        }
+        container.appendChild(btn);
+    }
+}
+
+function checkUnlockPassword() {
+    const input = document.getElementById('unlock-pass');
+    if (input.value === '1223') {
+        gameState.isMasterUnlocked = true;
+        showDialog("解鎖成功", "神秘力量已驅散所有迷霧，所有關卡皆可進入！");
+        refreshLevelGrid();
+        input.value = '';
+    } else {
+        showDialog("解鎖失敗", "密碼錯誤，請再次嘗試...");
+    }
+}
+
+function updateHearts() {
+    let h = '';
+    for(let i=0; i<3; i++) h += `<span class="heart">${(i < gameState.lives) ? '❤' : '🖤'}</span>`;
+    document.getElementById('hearts').innerHTML = h;
+}
+
+function takeDamage() {
+    if (player.invulnerable > 0) return;
+    gameState.lives--;
+    updateHearts();
+    player.invulnerable = 60;
+    if (gameState.lives <= 0) {
+        gameState.running = false;
+        document.getElementById('death-screen').style.display = 'flex';
+    }
+}
+
+function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (let r = 0; r < ROWS; r++) {
+        for (let c = 0; c < COLS; c++) {
+            let tile = currentMap[r][c];
+            let x = c * TILE_SIZE, y = r * TILE_SIZE;
+            ctx.fillStyle = (gameState.currentLevel % 2 === 0) ? '#1e3a1a' : '#1a2533';
+            ctx.fillRect(x, y, TILE_SIZE, TILE_SIZE);
+            switch(tile) {
+                case 1: ctx.fillStyle = '#3d3d3d'; ctx.fillRect(x+1, y+1, TILE_SIZE-2, TILE_SIZE-2); break;
+                case 2: ctx.fillStyle = '#d35400'; ctx.fillRect(x+4, y+4, TILE_SIZE-8, TILE_SIZE-8); break;
+                case 3: ctx.fillStyle = '#e74c3c'; ctx.beginPath(); ctx.moveTo(x+20, y+10); ctx.lineTo(x+10, y+30); ctx.lineTo(x+30, y+30); ctx.fill(); break;
+                case 4: if (gameState.levelSolved) {
+                    ctx.fillStyle = '#9b59b6'; ctx.beginPath(); ctx.arc(x+20, y+20, 14 + Math.sin(Date.now()/150)*4, 0, Math.PI*2); ctx.fill();
+                } break;
+                case 6: ctx.strokeStyle = '#3498db'; ctx.setLineDash([4, 2]); ctx.strokeRect(x+6, y+6, TILE_SIZE-12, TILE_SIZE-12); ctx.setLineDash([]); break;
+            }
+        }
+    }
+    if (player.invulnerable % 10 < 5) {
+        ctx.fillStyle = '#ecf0f1';
+        ctx.fillRect(player.x * TILE_SIZE + 8, player.y * TILE_SIZE + 8, 24, 24);
+        ctx.fillStyle = '#2c3e50';
+        let ex = player.x * TILE_SIZE, ey = player.y * TILE_SIZE;
+        if(player.dir === 'down') { ctx.fillRect(ex+12, ey+22, 4, 4); ctx.fillRect(ex+24, ey+22, 4, 4); }
+        else if(player.dir === 'up') { ctx.fillRect(ex+12, ey+10, 4, 4); ctx.fillRect(ex+24, ey+10, 4, 4); }
+        else if(player.dir === 'left') { ctx.fillRect(ex+10, ey+18, 4, 4); }
+        else if(player.dir === 'right') { ctx.fillRect(ex+26, ey+18, 4, 4); }
+    }
+}
+
+function movePlayer(dx, dy, direction) {
+    if (gameState.dialogActive || gameState.levelSelectOpen || !gameState.running) return;
+    player.dir = direction;
+    let nx = player.x + dx, ny = player.y + dy;
+    if (nx < 0 || nx >= COLS || ny < 0 || ny >= ROWS) return;
+    let target = currentMap[ny][nx];
+    if (target === 1) return;
+    if (target === 2) {
+        let bnx = nx + dx, bny = ny + dy;
+        if (bnx >= 0 && bnx < COLS && bny >= 0 && bny < ROWS) {
+            let bt = currentMap[bny][bnx];
+            if (bt === 0 || bt === 3 || bt === 6) {
+                currentMap[ny][nx] = (levels[gameState.currentLevel].map[ny][nx] === 6) ? 6 : 0;
+                currentMap[bny][bnx] = 2;
+                checkPuzzle();
+            } else return;
+        } else return;
+    }
+    if (target === 3) takeDamage();
+    if (target === 4 && gameState.levelSolved) { 
+        if (gameState.currentLevel + 1 > gameState.maxUnlockedLevel) {
+            gameState.maxUnlockedLevel = gameState.currentLevel + 1;
+        }
+        loadLevel(gameState.currentLevel + 1); 
+        return; 
+    }
+    player.x = nx; player.y = ny;
+}
+
+function checkPuzzle() {
+    const level = levels[gameState.currentLevel];
+    let allOnGoals = true;
+    for (let r = 0; r < ROWS; r++) {
+        for (let c = 0; c < COLS; c++) {
+            if (level.map[r][c] === 6 && currentMap[r][c] !== 2) allOnGoals = false;
+        }
+    }
+    if (allOnGoals && !gameState.levelSolved) {
+        gameState.levelSolved = true;
+        currentMap[ROWS-2][COLS-2] = 4;
+        showDialog("提示", "機關已開啟！傳送門出現在右下角。");
+    }
+}
+
+function showDialog(name, text) {
+    gameState.dialogActive = true;
+    document.getElementById('dialog-name').innerText = name;
+    document.getElementById('dialog-text').innerText = text;
+    document.getElementById('dialog-box').style.display = 'block';
+}
+
+function hideDialog() {
+    gameState.dialogActive = false;
+    document.getElementById('dialog-box').style.display = 'none';
+}
+
+// 事件監聽
+window.addEventListener('keydown', (e) => {
+    if (gameState.dialogActive && (e.code === 'Space' || e.code === 'Enter')) hideDialog();
+    if (gameState.dialogActive || gameState.levelSelectOpen) return;
+    switch(e.key) {
+        case 'ArrowUp': case 'w': movePlayer(0, -1, 'up'); break;
+        case 'ArrowDown': case 's': movePlayer(0, 1, 'down'); break;
+        case 'ArrowLeft': case 'a': movePlayer(-1, 0, 'left'); break;
+        case 'ArrowRight': case 'd': movePlayer(1, 0, 'right'); break;
+    }
+});
+
+// 虛擬按鍵邏輯
+const btns = {
+    'btn-up': [0, -1, 'up'],
+    'btn-down': [0, 1, 'down'],
+    'btn-left': [-1, 0, 'left'],
+    'btn-right': [1, 0, 'right']
+};
+
+Object.keys(btns).forEach(id => {
+    const el = document.getElementById(id);
+    const handler = (e) => { e.preventDefault(); movePlayer(...btns[id]); };
+    el.addEventListener('touchstart', handler);
+    el.addEventListener('mousedown', handler);
+});
+
+function gameLoop() {
+    if (!gameState.running) return;
+    if (player.invulnerable > 0) player.invulnerable--;
+    draw();
+    requestAnimationFrame(gameLoop);
+}
+</script>
+</body>
+</html>
+            
+        </main>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="js/scripts.js"></script>
+    </body>
+</html>
